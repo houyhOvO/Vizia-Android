@@ -1,4 +1,4 @@
-package com.example.vizia.ui.theme
+package com.viziatech.vizia.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

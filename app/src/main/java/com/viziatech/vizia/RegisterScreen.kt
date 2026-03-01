@@ -1,4 +1,4 @@
-package com.example.vizia
+package com.viziatech.vizia
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

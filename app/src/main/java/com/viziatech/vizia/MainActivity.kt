@@ -1,4 +1,4 @@
-package com.example.vizia
+package com.viziatech.vizia
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,7 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.vizia.ui.theme.ViziaTheme
+import com.viziatech.vizia.ui.theme.ViziaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

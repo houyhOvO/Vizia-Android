@@ -1,4 +1,4 @@
-package com.example.vizia
+package com.viziatech.vizia
 
 import org.junit.Test
 
