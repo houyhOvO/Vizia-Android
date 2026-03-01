@@ -31,10 +31,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoginScreen(onNavigateToRegister: () -> Unit) {
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     var isPasswordVisible by remember { mutableStateOf(false) }
+
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]+$".toRegex()
+    val isEmailValid = email.isEmpty() || email.matches(emailRegex)
 
 
     Column(
@@ -48,13 +51,21 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
+            value = email,
+            onValueChange = { email = it },
             label = { Text("邮箱") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            supportingText = {
+                if (!isEmailValid) {
+                    Text(
+                        "请输入正确的邮箱格式（如: example@vizia.com）",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         OutlinedTextField(
             value = password,
