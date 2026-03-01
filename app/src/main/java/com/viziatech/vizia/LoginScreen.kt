@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,8 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
 
     val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]+$".toRegex()
     val isEmailValid = email.isEmpty() || email.matches(emailRegex)
+
+    val passwordRegex = remember { Regex("[A-Za-z0-9!@#$%^&*()_+-=]*") }
 
 
     Column(
@@ -69,9 +73,17 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { input ->
+                if (input.matches(passwordRegex)) {
+                    password = input
+                }
+            },
             label = { Text("密码") },
             modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                autoCorrectEnabled = false
+            ),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {

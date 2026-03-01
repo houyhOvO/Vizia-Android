@@ -27,6 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+
 
 @Composable
 fun RegisterScreen(onBackToLogin: () -> Unit) {
@@ -39,6 +42,8 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
 
     val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]+$".toRegex()
     val isEmailValid = email.isEmpty() || email.matches(emailRegex)
+
+    val passwordRegex = remember { Regex("[A-Za-z0-9!@#$%^&*()_+-=]*") }
 
     val isPasswordMatch = password == confirmPassword && password.isNotEmpty()
     val canSubmit = email.isNotEmpty() && email.matches(emailRegex) && isPasswordMatch
@@ -72,9 +77,17 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { input ->
+                if (input.matches(passwordRegex)) {
+                    password = input
+                }
+            },
             label = { Text("设置密码") },
             modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                autoCorrectEnabled = false
+            ),
             supportingText = { Text("") },
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
@@ -93,9 +106,17 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
 
         OutlinedTextField(
             value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            onValueChange = { input ->
+                if (input.matches(passwordRegex)) {
+                    confirmPassword = input
+                }
+            },
             label = { Text("确认密码") },
             modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                autoCorrectEnabled = false
+            ),
             isError = confirmPassword.isNotEmpty() && password != confirmPassword,
             visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
