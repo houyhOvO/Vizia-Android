@@ -1,5 +1,7 @@
 package com.viziatech.vizia
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,15 +24,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.builtin.Email
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(onBackToLogin: () -> Unit) {
@@ -53,6 +59,9 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
 
     val isPasswordFormatValid = password.matches(passwordValidationRegex)
     val isPasswordMatch = password == confirmPassword && password.isNotEmpty()
+
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     // 按钮启用逻辑：邮箱合法 + 密码格式合法 + 两次输入一致
     val canSubmit =
@@ -163,7 +172,27 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* TODO: 注册逻辑 */ },
+            onClick = {
+                scope.launch {
+                    try {
+                        // 调用 Supabase 注册
+                        SupabaseHelper.client.auth.signUpWith(Email) {
+                            this.email = email
+                            this.password = password
+                        }
+                        Log.d("ViziaAuth", "注册成功: $email")
+                        Toast.makeText(context, "注册成功！", Toast.LENGTH_LONG).show()
+                        onBackToLogin() // 注册成功返回登录页
+                    } catch (e: Exception) {
+                        Log.e("ViziaAuth", "注册过程中发生异常", e)
+                        Toast.makeText(
+                            context,
+                            "注册失败: ${e.localizedMessage}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             enabled = canSubmit
         ) {

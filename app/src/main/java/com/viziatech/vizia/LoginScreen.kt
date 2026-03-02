@@ -1,6 +1,8 @@
 package com.viziatech.vizia
 
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,16 +25,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.builtin.Email
+import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onNavigateToRegister: () -> Unit) {
+fun LoginScreen(onNavigateToRegister: () -> Unit, onLoginSuccess: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -42,6 +49,9 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
     val isEmailValid = email.isEmpty() || email.matches(emailRegex)
 
     val passwordRegex = remember { Regex("[A-Za-z0-9!@#$%^&*()_+-=]*") }
+
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
 
     Column(
@@ -99,7 +109,21 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(onClick = { /*TODO: 登录逻辑 */ }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = {
+            scope.launch {
+                try {
+                    SupabaseHelper.client.auth.signInWith(Email) {
+                        this.email = email
+                        this.password = password
+                    }
+                    onLoginSuccess() // 登录成功回调
+                } catch (e: Exception) {
+                    Log.e("ViziaAuth", "登录失败", e)
+                    Toast.makeText(context, "登录失败: ${e.localizedMessage}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }, modifier = Modifier.fillMaxWidth()) {
             Text("登录")
         }
 
