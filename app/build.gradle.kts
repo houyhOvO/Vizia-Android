@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     // Supabase 核心与 Auth 模块
     implementation(libs.supabase.postgrest.kt)
+    implementation(libs.multiplatform.settings)
     implementation(libs.auth.kt)
     implementation(libs.ktor.client.android)
     testImplementation(libs.junit)

@@ -1,6 +1,6 @@
 package com.viziatech.vizia
 
-
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
+import androidx.core.content.edit
 
 @Composable
 fun LoginScreen(onNavigateToRegister: () -> Unit, onLoginSuccess: () -> Unit) {
@@ -116,6 +117,13 @@ fun LoginScreen(onNavigateToRegister: () -> Unit, onLoginSuccess: () -> Unit) {
                         this.email = email
                         this.password = password
                     }
+                    val session = SupabaseHelper.client.auth.currentSessionOrNull()
+                    if (session != null) {
+                        val prefs = context.getSharedPreferences("vizia_auth", Context.MODE_PRIVATE)
+                        prefs.edit { putString("access_token", session.accessToken) }
+                        prefs.edit { putString("refresh_token", session.refreshToken) }
+                    }
+                    Log.d("Vizia", "登录成功，当前 Session: ${session?.accessToken?.take(10)}...")
                     onLoginSuccess() // 登录成功回调
                 } catch (e: Exception) {
                     Log.e("ViziaAuth", "登录失败", e)
