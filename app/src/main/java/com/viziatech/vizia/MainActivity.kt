@@ -18,6 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.viziatech.vizia.ui.HomeScreen
+import com.viziatech.vizia.ui.LoginScreen
+import com.viziatech.vizia.ui.RegisterScreen
 import com.viziatech.vizia.ui.theme.ViziaTheme
 import io.github.jan.supabase.annotations.SupabaseInternal
 import io.github.jan.supabase.auth.auth

@@ -1,4 +1,4 @@
-package com.viziatech.vizia
+package com.viziatech.vizia.ui
 
 import android.util.Log
 import android.widget.Toast
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.viziatech.vizia.SupabaseHelper
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch

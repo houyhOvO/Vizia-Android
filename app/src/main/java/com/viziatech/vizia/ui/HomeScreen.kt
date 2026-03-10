@@ -1,4 +1,4 @@
-package com.viziatech.vizia
+package com.viziatech.vizia.ui
 
 import android.content.Context
 import android.util.Log
@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
+import com.viziatech.vizia.SupabaseHelper
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 

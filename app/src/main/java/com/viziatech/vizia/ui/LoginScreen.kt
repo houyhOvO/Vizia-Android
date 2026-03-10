@@ -1,4 +1,4 @@
-package com.viziatech.vizia
+package com.viziatech.vizia.ui
 
 import android.content.Context
 import android.util.Log
@@ -38,6 +38,7 @@ import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
 import androidx.core.content.edit
+import com.viziatech.vizia.SupabaseHelper
 
 @Composable
 fun LoginScreen(onNavigateToRegister: () -> Unit, onLoginSuccess: () -> Unit) {
