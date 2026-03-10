@@ -13,6 +13,7 @@ val supabaseKey = properties.getProperty("SUPABASE_KEY") ?: ""
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -63,11 +64,11 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
-    // Supabase 核心与 Auth 模块
     implementation(libs.supabase.postgrest.kt)
     implementation(libs.multiplatform.settings)
     implementation(libs.auth.kt)
     implementation(libs.ktor.client.android)
+    implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

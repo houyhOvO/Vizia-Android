@@ -3,6 +3,7 @@ package com.viziatech.vizia
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
 
 object SupaBaseHelper {
     lateinit var client: SupabaseClient
@@ -14,6 +15,7 @@ object SupaBaseHelper {
             install(Auth) {
                 alwaysAutoRefresh = true
             }
+            install(Postgrest)
         }
     }
 }
