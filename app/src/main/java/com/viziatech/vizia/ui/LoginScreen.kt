@@ -38,7 +38,7 @@ import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
 import androidx.core.content.edit
-import com.viziatech.vizia.SupabaseHelper
+import com.viziatech.vizia.SupaBaseHelper
 
 @Composable
 fun LoginScreen(onNavigateToRegister: () -> Unit, onLoginSuccess: () -> Unit) {
@@ -114,11 +114,11 @@ fun LoginScreen(onNavigateToRegister: () -> Unit, onLoginSuccess: () -> Unit) {
         Button(onClick = {
             scope.launch {
                 try {
-                    SupabaseHelper.client.auth.signInWith(Email) {
+                    SupaBaseHelper.client.auth.signInWith(Email) {
                         this.email = email
                         this.password = password
                     }
-                    val session = SupabaseHelper.client.auth.currentSessionOrNull()
+                    val session = SupaBaseHelper.client.auth.currentSessionOrNull()
                     if (session != null) {
                         val prefs = context.getSharedPreferences("vizia_auth", Context.MODE_PRIVATE)
                         prefs.edit { putString("access_token", session.accessToken) }

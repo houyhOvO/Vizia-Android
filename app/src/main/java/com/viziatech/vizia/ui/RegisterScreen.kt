@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.viziatech.vizia.SupabaseHelper
+import com.viziatech.vizia.SupaBaseHelper
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
@@ -177,7 +177,7 @@ fun RegisterScreen(onBackToLogin: () -> Unit) {
                 scope.launch {
                     try {
                         // 调用 Supabase 注册
-                        SupabaseHelper.client.auth.signUpWith(Email) {
+                        SupaBaseHelper.client.auth.signUpWith(Email) {
                             this.email = email
                             this.password = password
                         }

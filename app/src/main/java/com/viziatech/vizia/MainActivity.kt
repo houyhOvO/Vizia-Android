@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(SupabaseInternal::class, ExperimentalTime::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SupabaseHelper.init()
+        SupaBaseHelper.init()
         enableEdgeToEdge()
         setContent {
             ViziaTheme {
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     if (savedToken != null && savedRefresh != null) {
                         try {
                             // 核心：手动恢复会话，不需要网络请求，直接把 Token 塞进内存
-                            SupabaseHelper.client.auth.importSession(
+                            SupaBaseHelper.client.auth.importSession(
                                 UserSession(
                                     accessToken = savedToken,
                                     refreshToken = savedRefresh,
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                             Log.e("Vizia", "Token 恢复失败", e)
                         }
                     }
-                    val session = SupabaseHelper.client.auth.currentSessionOrNull()
+                    val session = SupaBaseHelper.client.auth.currentSessionOrNull()
 
                     Log.d("Vizia", "启动检查 - Session 是否存在: ${session != null}")
 

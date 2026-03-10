@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
-import com.viziatech.vizia.SupabaseHelper
+import com.viziatech.vizia.SupaBaseHelper
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
@@ -37,7 +37,7 @@ fun HomeScreen(onLogout: () -> Unit) {
         Button(onClick = {
             scope.launch {
                 try {
-                    SupabaseHelper.client.auth.signOut()
+                    SupaBaseHelper.client.auth.signOut()
                     val prefs = context.getSharedPreferences("vizia_auth", Context.MODE_PRIVATE)
                     prefs.edit { clear() }
                     onLogout()
