@@ -9,6 +9,7 @@ if (localPropertiesFile.exists()) {
 
 val supabaseUrl = properties.getProperty("SUPABASE_URL") ?: ""
 val supabaseKey = properties.getProperty("SUPABASE_KEY") ?: ""
+val bigModelApiKey = properties.getProperty("BIG_MODEL_API_KEY") ?: ""
 
 plugins {
     alias(libs.plugins.android.application)
@@ -33,6 +34,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
+        buildConfigField("String", "BIG_MODEL_API_KEY", "\"$bigModelApiKey\"")
     }
 
     buildTypes {
@@ -68,6 +70,7 @@ dependencies {
     implementation(libs.multiplatform.settings)
     implementation(libs.auth.kt)
     implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.cio)
     implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
